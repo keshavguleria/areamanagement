@@ -15,21 +15,21 @@ SPA using C#, .Net Core 2, Angular 6 and SQL Server 2017
 ## How to use application:
 1.	By default, no area will be there in table. Click on + button to add a new area
     <kbd>
-      <img src="screenshots/1.png">
+      <img src="Screenshots/1.png">
     </kbd>
 2.	Type area name and click on save
     <kbd>
-      <img src="screenshots/2.png">
+      <img src="Screenshots/2.png">
     </kbd>
 3.	To edit the area name, click on Edit button in the action column
     <kbd>
-      <img src="screenshots/3.png">
+      <img src="Screenshots/3.png">
     </kbd>
 4.	Only area name is editable, rest all columns are read-only.
     <kbd>
-      <img src="screenshots/4.png">
+      <img src="Screenshots/4.png">
     </kbd>
 5.	Click on delete button on the action column to delete the record.
     <kbd>
-      <img src="screenshots/5.png">
+      <img src="Screenshots/5.png">
     </kbd>
