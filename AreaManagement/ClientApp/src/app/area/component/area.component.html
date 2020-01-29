@@ -1,0 +1,118 @@
+<div class="wrapper">
+  <div class="header">
+    <i class="fa fa-plus-circle" (click)="display='addNew'; title='Add New Area'; area= {};" *ngIf="display==='list'"></i>
+    <i class="fa fa-arrow-circle-left" (click)="display='list'; title='Areas Listing';"
+       *ngIf="display==='edit' || display==='addNew'"></i>
+    <i class="title">{{title}}</i>
+  </div>
+  <hr>
+  <div class="listing" *ngIf="display==='list'">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Area Id</th>
+          <th>Area Name</th>
+          <th>Created On</th>
+          <th>Created By</th>
+          <th>Updated On</th>
+          <th>Updated By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let area of areaList">
+          <td>{{area.id}}</td>
+          <td>{{area.name}}</td>
+          <td>{{area.createdOn}}</td>
+          <td>{{area.createdBy}}</td>
+          <td>{{area.updatedOn}}</td>
+          <td>{{area.updatedBy}}</td>
+          <td>
+            <span class="fa fa-edit" (click)="GetAreaById(area.id)"></span> &nbsp;
+            <span class="fa fa-trash" (click)="ConfirmDelete(area.id)"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="addNew" *ngIf="display==='edit' || display==='addNew'">
+    <form #form="ngForm" (ngSubmit)="form.form.valid && AddArea(form)" autocomplete="off">
+      <input type="hidden" name="id" [(ngModel)]="area.id">
+      <div class="form-group col-sm-12 row">
+        <div class="col-sm-4" *ngIf="display==='edit'">
+          <div>
+            <label class="control-label">Area Id :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="id" [(ngModel)]="area.id" #id="ngModel" readonly />
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf="display==='edit' || display==='addNew'">
+          <div>
+            <label class="control-label">Area Name :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="name" [(ngModel)]="area.name"
+                   #name="ngModel" [ngClass]="{ 'is-invalid': form.submitted && areaName.invalid }" required />
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf="display==='edit'">
+          <div>
+            <label class="control-label">Created On :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="createdOn" [(ngModel)]="area.createdOn" #id="ngModel" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 row">
+        <div class="col-sm-4" *ngIf="display==='edit'">
+          <div>
+            <label class="control-label">Created By :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="createdBy" [(ngModel)]="area.createdBy" #id="ngModel" readonly />
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf="display==='edit'">
+          <div>
+            <label class="control-label">Updated On :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="updatedOn" [(ngModel)]="area.updatedOn" #id="ngModel" readonly />
+          </div>
+        </div>
+        <div class="col-sm-4" *ngIf="display==='edit'">
+          <div>
+            <label class="control-label">Updated By :</label>
+          </div>
+          <div>
+            <input type="text" class="form-control" name="updatedBy" [(ngModel)]="area.updatedBy" #id="ngModel" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 row">
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-success">Save Area</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div [className]="togglePopUp ? 'modal show' : 'modal fade'" [style.display]="togglePopUp ? 'block' : 'none'">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm Delete !!!</h4>
+        </div>
+        <div class="modal-body">
+          Are you sure want to delete ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-sm" (click)="DeleteArea()">Yes</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="togglePopUp = false;">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
