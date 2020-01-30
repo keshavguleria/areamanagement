@@ -3,7 +3,7 @@ using AreaManagement.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 namespace AreaManagement.Controllers
 {
@@ -20,33 +20,33 @@ namespace AreaManagement.Controllers
         }
 
         [Route("create-area")]
-        public bool CreateArea(TblArea area)
+        public async Task<bool> CreateAreaAsync(TblArea area)
         {
-            return AreaService.CreateArea(area);
+            return await AreaService.CreateAreaAsync(area);
         }
 
         [Route("get-area-byId")]
-        public TblArea GetAreaById([FromQuery(Name = "id")] int id)
+        public async Task<TblArea> GetAreaByIdAsync([FromQuery(Name = "id")] int id)
         {
-            return AreaService.GetAreaById(id);
+            return await AreaService.GetAreaByIdAsync(id);
         }
 
         [Route("get-all-areas")]
-        public List<TblArea> GetAllAreas()
+        public async Task<IList<TblArea>> GetAllAreasAsync()
         {
-            return AreaService.GeadAllAreas();
+            return await AreaService.GetAllAreasAsync();
         }
 
         [Route("update-area")]
-        public bool UpdateArea([FromBody] TblArea area)
+        public async Task<bool> UpdateAreaAsync([FromBody] TblArea area)
         {
-            return AreaService.UpdateArea(area);
+            return await AreaService.UpdateAreaAsync(area);
         }
 
         [Route("delete-area")]
-        public bool DeleteArea([FromQuery(Name = "id")] int id)
+        public async Task<bool> DeleteAreaAsync([FromQuery(Name = "id")] int id)
         {
-            return AreaService.DeleteArea(id);
+            return await AreaService.DeleteAreaAsync(id);
         }
     }
 }

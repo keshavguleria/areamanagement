@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AreaManagement.Service
 {
@@ -15,43 +16,43 @@ namespace AreaManagement.Service
         {
             this.ServiceProvider = serviceProvider;
         }
-        public bool CreateArea(TblArea entity)
+
+        public async Task<bool> CreateAreaAsync(TblArea entity)
         {
             entity.CreatedOn = DateTime.UtcNow;
             entity.CreatedBy = 1;
-            Context.TblAreas.Add(entity);
-            return Context.SaveChanges() > 0 ? true : false;
+            await Context.TblAreas.AddAsync(entity);
+            int saved = await Context.SaveChangesAsync();
+            return saved > 0 ? true : false;
         }
 
-        public List<TblArea> GeadAllAreas()
+        public async Task<IList<TblArea>> GetAllAreasAsync()
         {
-            var v = Context.TblAreas.ToList();
-            return v;
+            return await Context.TblAreas.ToListAsync();
         }
 
-        public TblArea GetAreaById(int id)
+        public async Task<TblArea> GetAreaByIdAsync(int id)
         {
-            return Context.TblAreas.Where(x => x.Id == id).FirstOrDefault();
+            return await Context.TblAreas.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public bool UpdateArea(TblArea entity)
+        public async Task<bool> UpdateAreaAsync(TblArea entity)
         {
-            TblArea existingArea = Context.TblAreas.Where(x => x.Id == entity.Id).FirstOrDefault();
+            TblArea existingArea = await Context.TblAreas.Where(x => x.Id == entity.Id).FirstOrDefaultAsync();
             if (existingArea.Id > 0)
             {
                 existingArea.Name = entity.Name;
                 existingArea.UpdatedOn = DateTime.UtcNow;
                 existingArea.UpdatedBy = 1;
             }
-            Context.Entry(existingArea).State = EntityState.Modified;
-            return Context.SaveChanges() > 0 ? true : false;
+            return await Context.SaveChangesAsync() > 0 ? true : false;
         }
 
-        public bool DeleteArea(int id)
+        public async Task<bool> DeleteAreaAsync(int id)
         {
-            TblArea area = Context.TblAreas.Where(x => x.Id == id).FirstOrDefault();
+            TblArea area = await Context.TblAreas.Where(x => x.Id == id).FirstOrDefaultAsync();
             Context.TblAreas.Remove(area);
-            return Context.SaveChanges() == 1 ? true : false;
+            return await Context.SaveChangesAsync() == 1 ? true : false;
         }
     }
 }
