@@ -14,31 +14,26 @@ export class AreaCrudService {
 
   Create(area: AreaModel) {
     let reqHeader = new HttpHeaders();
-    reqHeader.append('Content-Type', 'application/json');
     return this.http.post(this.baseurl + 'api/area/create-area', area, { headers: reqHeader });
   }
 
   GetById(id: number) {
     let reqHeader = new HttpHeaders();
-    reqHeader.append('Content-Type', 'application/json');
     return this.http.get(this.baseurl + 'api/area/get-area-byId?id=' + id, { headers: reqHeader });
   }
 
   GetAll() {
     let reqHeader = new HttpHeaders();
-    reqHeader.append('Content-Type', 'application/json');
     return this.http.get(this.baseurl + 'api/area/get-all-areas', { headers: reqHeader });
   }
 
   Update(area: AreaModel) {
     let reqHeader = new HttpHeaders();
-    reqHeader.append('Content-Type', 'application/json');
-    return this.http.post(this.baseurl + 'api/area/update-area', area, { headers: reqHeader });
+    return this.http.put(this.baseurl + 'api/area/update-area', area, { headers: reqHeader });
   }
 
   Delete(id: number) {
     let reqHeader = new HttpHeaders();
-    reqHeader.append('Content-Type', 'application/json');
-    return this.http.get(this.baseurl + 'api/area/delete-area?id=' + id, { headers: reqHeader });
+    return this.http.delete(this.baseurl + 'api/area/delete-area?id=' + id, { headers: reqHeader });
   }
 }
