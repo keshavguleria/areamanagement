@@ -1,5 +1,6 @@
 ﻿using AreaManagement.DatabaseContext;
 using AreaManagement.Entity;
+using AreaManagement.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,31 +18,62 @@ namespace AreaManagement.Service
             this.ServiceProvider = serviceProvider;
         }
 
-        public async Task<bool> CreateAreaAsync(TblArea entity)
+        public async Task<bool> CreateAreaAsync(AreaViewModel model)
         {
-            entity.CreatedOn = DateTime.UtcNow;
-            entity.CreatedBy = 1;
+            var entity = new TblArea
+            {
+                Name = model.AreaName,
+                CreatedOn = DateTime.UtcNow,
+                CreatedBy = 1
+            };
             await Context.TblAreas.AddAsync(entity);
             int saved = await Context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
 
-        public async Task<IList<TblArea>> GetAllAreasAsync()
+        public async Task<IList<AreaViewModel>> GetAllAreasAsync()
         {
-            return await Context.TblAreas.ToListAsync();
+            var result = await Context.TblAreas.ToListAsync();
+            var areas = new List<AreaViewModel>();
+            foreach (var item in result)
+            {
+                var area = new AreaViewModel
+                {
+                    Id = item.Id,
+                    AreaName = item.Name,
+                    CreatedBy = item.CreatedBy,
+                    CreatedOn = item.CreatedOn,
+                    UpdatedBy = item.UpdatedBy,
+                    UpdatedOn = item.UpdatedOn
+                };
+                areas.Add(area);
+            }
+
+            return areas;
         }
 
-        public async Task<TblArea> GetAreaByIdAsync(int id)
+        public async Task<AreaViewModel> GetAreaByIdAsync(int id)
         {
-            return await Context.TblAreas.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var result = await Context.TblAreas.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var area = new AreaViewModel();
+            if (result != null)
+            {
+                area.Id = result.Id;
+                area.AreaName = result.Name;
+                area.CreatedBy = result.CreatedBy;
+                area.CreatedOn = result.CreatedOn;
+                area.UpdatedBy = result.UpdatedBy;
+                area.UpdatedOn = result.UpdatedOn;
+            }
+            return area;
         }
 
-        public async Task<bool> UpdateAreaAsync(TblArea entity)
+        public async Task<bool> UpdateAreaAsync(AreaViewModel entity)
         {
             TblArea existingArea = await Context.TblAreas.Where(x => x.Id == entity.Id).FirstOrDefaultAsync();
             if (existingArea.Id > 0)
             {
-                existingArea.Name = entity.Name;
+                existingArea.Name = entity.AreaName;
                 existingArea.UpdatedOn = DateTime.UtcNow;
                 existingArea.UpdatedBy = 1;
             }

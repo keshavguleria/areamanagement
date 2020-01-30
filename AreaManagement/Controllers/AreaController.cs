@@ -1,5 +1,6 @@
 ﻿using AreaManagement.Entity;
 using AreaManagement.Service;
+using AreaManagement.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,25 +21,25 @@ namespace AreaManagement.Controllers
         }
 
         [Route("create-area")]
-        public async Task<bool> CreateAreaAsync(TblArea area)
+        public async Task<bool> CreateAreaAsync(AreaViewModel areaModel)
         {
-            return await AreaService.CreateAreaAsync(area);
+            return await AreaService.CreateAreaAsync(areaModel);
         }
 
         [Route("get-area-byId")]
-        public async Task<TblArea> GetAreaByIdAsync([FromQuery(Name = "id")] int id)
+        public async Task<AreaViewModel> GetAreaByIdAsync([FromQuery(Name = "id")] int id)
         {
             return await AreaService.GetAreaByIdAsync(id);
         }
 
         [Route("get-all-areas")]
-        public async Task<IList<TblArea>> GetAllAreasAsync()
+        public async Task<IList<AreaViewModel>> GetAllAreasAsync()
         {
             return await AreaService.GetAllAreasAsync();
         }
 
         [Route("update-area")]
-        public async Task<bool> UpdateAreaAsync([FromBody] TblArea area)
+        public async Task<bool> UpdateAreaAsync([FromBody] AreaViewModel area)
         {
             return await AreaService.UpdateAreaAsync(area);
         }

@@ -22,7 +22,7 @@
       <tbody>
         <tr *ngFor="let area of areaList">
           <td>{{area.id}}</td>
-          <td>{{area.name}}</td>
+          <td>{{area.areaName}}</td>
           <td>{{area.createdOn}}</td>
           <td>{{area.createdBy}}</td>
           <td>{{area.updatedOn}}</td>
@@ -52,8 +52,8 @@
             <label class="control-label">Area Name :</label>
           </div>
           <div>
-            <input type="text" class="form-control" name="name" [(ngModel)]="area.name"
-                   #name="ngModel" [ngClass]="{ 'is-invalid': form.submitted && areaName.invalid }" required />
+            <input type="text" class="form-control" name="areaName" [(ngModel)]="area.areaName"
+                   #areaName="ngModel" [ngClass]="{ 'is-invalid': form.submitted && areaName.invalid }" required />
           </div>
         </div>
         <div class="col-sm-4" *ngIf="display==='edit'">

@@ -1,6 +1,6 @@
 export class AreaModel {
   id: number;
-  name: string;
+  areaName: string;
   createdOn: Date;
   createdBy: string;
   updatedOn: Date;
